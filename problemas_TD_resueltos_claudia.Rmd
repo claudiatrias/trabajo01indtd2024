@@ -31,6 +31,67 @@ knitr::kable(tabla)
 
 ```
 
+Cargamos las funciones con las que vamos a trabajar:
+
+```{r}
+source("C:/Users/usuario/OneDrive/Desktop/5º CARRERA/TD/TDecisionCodigo/teoriadecision_funciones_incertidumbre.R")
+```
+
+Creamos la tabla en el formato que necesitan dichas funciones:
+
+```{r}
+
+tb = crea.tablaX(c(7,4,-2,
+                      0,3,1,
+                      5,8,4),
+                      numalternativas = 3,
+                      numestados = 3)
+
+```
+
+Consideramos ambos casos y resolvemos el problema:
+
+```{r}
+
+# Caso favorable (Beneficios)
+
+c1 = criterio.Wald(tb, favorable = TRUE) 
+c2 = criterio.Optimista(tb, favorable = TRUE) 
+c3 = criterio.Hurwicz(tb, alfa =0.4, favorable = TRUE) 
+c4 = criterio.Savage(tb, favorable = TRUE) 
+c5 = criterio.Laplace(tb, favorable = TRUE) 
+c6 = criterio.PuntoIdeal(tb, favorable = TRUE) 
+
+resumen_alt_op = data.frame(Criterio = c("Wald", "Optimista", "Hurwicz", "Savage", "Laplace", "Punto Ideal"),
+                            Alternativa_Optima = c(c1$AlternativaOptima, c2$AlternativaOptima, c3$AlternativaOptima, c4$AlternativaOptima, c5$AlternativaOptima, c6$AlternativaOptima))
+
+knitr::kable(resumen_alt_op, caption = "Resumen Alternativas Óptimas - Caso Favorable")
+
+```
+
+Luego, concluimos que la alternativa óptima es d3.
+
+```{r}
+
+# Caso desfavorable (Costes)
+
+c1d = criterio.Wald(tb, favorable = FALSE) 
+c2d = criterio.Optimista(tb, favorable = FALSE) 
+c3d = criterio.Hurwicz(tb, alfa =0.4, FALSE) 
+c4d = criterio.Savage(tb, favorable = FALSE) 
+c5d = criterio.Laplace(tb, favorable = FALSE)
+c6d = criterio.PuntoIdeal(tb, favorable = FALSE) 
+
+resumen_alt_op = data.frame(Criterio = c("Wald", "Optimista", "Hurwicz", "Savage", "Laplace", "Punto Ideal"),
+                            Alternativa_Optima = c(c1d$AlternativaOptima, c2d$AlternativaOptima, c3d$AlternativaOptima, c4d$AlternativaOptima, c5d$AlternativaOptima, c6d$AlternativaOptima))
+
+knitr::kable(resumen_alt_op, caption = "Resumen Alternativas Óptimas - Caso Desfavorable")
+
+```
+
+Luego se concluye que la alternativa óptima es d2, salvo bajo el criterio optimista 
+que es d1.
+
 
 # Problema 2
 
@@ -44,14 +105,34 @@ estar dos horas y la vuelta la harán andando si no llueve y en uber si, por el 
 llueve. El precio del uber será 15 euros entre las dos.
 
 - Salir a correr por el parque de al lado de su casa. Si decidiesen esto, deberían
-comprarse unos zapatos adecuados para ello, que les costarían 50 euros a cada una. La vuelta
+comprarse unos zapatos adecuados para ello, que les costarían 45 euros a cada una. La vuelta
 la harían andando, lloviese o no, pues no se van a alejar mucho de su casa.
 
 - Montar en bici. Para ello, tendrían que alquilarlas en una tienda cerca de su casa.
 El precio de alquiler es de 15 euros por hora y por persona. La vuelta la harían en bici
 si no llueve y en uber si llueve. Teniendo en cuenta que el uber ha de ser especial pues
-tiene que tener sitio para dos bicicletas, el precio es de 30 euros entre las dos.
-
+tiene que tener sitio para dos bicicletas, el precio es de 40 euros entre las dos.
 
 ¿Qué les recomienda usted que hagan, si su objetivo es minimizar los costes?
 
+Creamos la tabla en el formato que necesitan las funciones:
+
+```{r}
+
+tb2 = crea.tablaX(c(80, 95, 90, 90, 60, 100), numalternativas = 3, numestados = 2, 
+                  nb_alternativas = c("Escalada","Correr", "Bici"),
+                  nb_estados = c("No llueve", "Llueve"))
+
+```
+
+Se trata de un problema de costes, luego la situación es desfavorable. Resolvamos
+el problema según todos los criterios que conocemos:
+
+```{r}
+library(tinytable)
+tt(criterio.Todos(tb2, 0.3, favorable = FALSE), rownames = TRUE)
+
+```
+
+Luego la alternativa óptima es montar en bici, salvo bajo el criterio de Wald
+(Criterio pesimista) que es correr.
