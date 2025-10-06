@@ -1,0 +1,57 @@
+---
+title: "Problemas Resueltos TD"
+author: "Claudia Trias de Tena"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Problema 1
+
+Aplica los criterios de decisión bajo incertidumbre e indica cual es la alternativa
+óptima basándote en la siguiente tabla y teniendo en cuenta todos los posibles 
+criterios de decisión. Considera el problema para ambas situaciones: costes y 
+beneficios.
+
+NOTA: Usar las funciones individuales de incertidumbre por separado.
+
+
+```{r, echo = FALSE}
+library(knitr)
+tabla <- data.frame(e1 = c(7, 4,-2),
+                    e2 = c(0,3,1),
+                    e3 = c(5,8,4))
+rownames(tabla) <- c("d1", "d2", "d3")
+
+knitr::kable(tabla)
+
+```
+
+
+# Problema 2
+
+Paula y Claudia quieren hacer algo de deporte el fin de semana. Deciden que el día
+que mejor les viene es el domingo, pero no se ponen de acuerdo en el deporte que hacer.
+A ver si usted puede ayudarles. Tienen las siguientes opciones:
+
+- Hacer escalada en un rocódromo. El equipo de escalada ya lo tienen 
+pero han de pagar por la hora de uso de las instalaciones 20 euros por persona. Planean 
+estar dos horas y la vuelta la harán andando si no llueve y en uber si, por el contrario,
+llueve. El precio del uber será 15 euros entre las dos.
+
+- Salir a correr por el parque de al lado de su casa. Si decidiesen esto, deberían
+comprarse unos zapatos adecuados para ello, que les costarían 50 euros a cada una. La vuelta
+la harían andando, lloviese o no, pues no se van a alejar mucho de su casa.
+
+- Montar en bici. Para ello, tendrían que alquilarlas en una tienda cerca de su casa.
+El precio de alquiler es de 15 euros por hora y por persona. La vuelta la harían en bici
+si no llueve y en uber si llueve. Teniendo en cuenta que el uber ha de ser especial pues
+tiene que tener sitio para dos bicicletas, el precio es de 30 euros entre las dos.
+
+
+¿Qué les recomienda usted que hagan, si su objetivo es minimizar los costes?
+
